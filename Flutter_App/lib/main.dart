@@ -29,7 +29,6 @@ Future<void> main() async {
   theRoute = (status == true
       ? FamiliarLogin()
       : StrangerLogin()); // and decide to navigate it to correct page
-  // runApp(MyApp());
   runApp(MyApp());
 }
 
