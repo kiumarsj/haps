@@ -3,8 +3,6 @@ import 'package:healthy_meter/constants.dart';
 import 'package:healthy_meter/screens/homeScreen.dart';
 import 'package:healthy_meter/screens/userProfileScreen.dart';
 import 'package:healthy_meter/screens/gadgetsScreen.dart';
-import 'package:healthy_meter/services/data_management.dart';
-import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   @override

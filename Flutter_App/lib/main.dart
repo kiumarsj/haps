@@ -17,6 +17,7 @@ import 'package:healthy_meter/services/data_management.dart';
 
 // defining routes widget
 Widget theRoute = StrangerLogin();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   //checking if user has bees signedIn before or not
@@ -29,6 +30,7 @@ Future<void> main() async {
   theRoute = (status == true
       ? FamiliarLogin()
       : StrangerLogin()); // and decide to navigate it to correct page
+  // runApp(MyApp());
   runApp(MyApp());
 }
 
@@ -38,27 +40,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => DataClass()..Updater(),
+      create: (_) => DataClass()..Initialization(),
       lazy: false,
-      //builder: (context, _) => MyApp(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Healthy Meter',
+        navigatorKey: navigatorKey,
         theme: ThemeData(
           // here we define app's theme and Locale
           fontFamily: "Vazir",
           primaryColor: lightColorScheme.primary,
           backgroundColor: lightColorScheme.background,
         ),
-        // localizationsDelegates: [
-        //   GlobalCupertinoLocalizations.delegate,
-        //   GlobalMaterialLocalizations.delegate,
-        //   GlobalWidgetsLocalizations.delegate,
-        // ],
-        // supportedLocales: [
-        //   Locale("fa", "IR"),
-        // ],
-        // locale: Locale("fa", "IR"),
         routes: {
           '/main': (context) => MainScreen(),
           '/loginFamiliar': (context) => FamiliarLogin(),
@@ -68,7 +61,7 @@ class MyApp extends StatelessWidget {
           '/patient': (context) => GadgetsScreen(),
           '/userProfile': (context) => UserProfileScreen(),
           '/patientProfile': (context) => PatientProfileScreen(),
-          '/alert': (context) => AlertScreen(),
+          '/alert': (context) => const AlertScreen(),
         },
         home: theRoute,
       ),

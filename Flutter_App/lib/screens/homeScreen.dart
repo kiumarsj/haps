@@ -7,9 +7,7 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:healthy_meter/screens/patientProfileScreen.dart';
 import 'package:healthy_meter/services/networking.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:healthy_meter/services/data_management.dart';
 
 final myList = List<DataRow>.empty(growable: true);
 String userDiplayName = "Dr.";
@@ -113,10 +111,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     futureData = getPatients();
-    // if (context.watch<DataClass>().alertMode == true) {
-    //   print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww goooo to alert mode");
-    //   Navigator.pushNamed(context, '/alert');
-    // }
   }
 
   @override

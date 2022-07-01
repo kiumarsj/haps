@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:healthy_meter/main.dart';
 import 'package:healthy_meter/screens/alertScreen.dart';
 import 'package:healthy_meter/services/socket.dart';
-import 'package:healthy_meter/screens/mainScreen.dart';
 import 'package:http/http.dart' as http;
 import 'package:healthy_meter/services/networking.dart';
 import 'dart:convert';
@@ -12,8 +12,6 @@ class DataClass with ChangeNotifier {
   var onlineGadgets;
   var patientsList;
   var patientsStatus;
-
-  bool alertMode = false;
 
   Future<void> initCall() async {
     http.Response response;
@@ -62,7 +60,7 @@ class DataClass with ChangeNotifier {
     await socketInstance.connection.start();
   }
 
-  void Updater() {
+  void Initialization() {
     initCall();
     OpenSocket();
 
@@ -73,9 +71,18 @@ class DataClass with ChangeNotifier {
 
     socketInstance.connection.on('UpdateOnlineGadgets', (gadgetsUpdate) {
       onlineGadgets = jsonDecode(gadgetsUpdate![0].toString());
-      print("this is socket invoked");
-      print(onlineGadgets.toString());
       notifyListeners();
+    });
+
+    socketInstance.connection.on('OnCriticalConditionHappened', (criticalData) {
+      print("tttttttttttttttttttttttttttt start critical condition");
+      var temp = jsonDecode(criticalData.toString());
+      print(temp.toString());
+      navigatorKey.currentState?.pushNamed('/alert',
+          arguments: AlertScreen(
+            data: temp,
+          ));
+      print("tttttttttttttttttttttttttttt end critical condition");
     });
 
     socketInstance.connection.on('PatientSituationUpdated', (newStatus) {
@@ -94,23 +101,21 @@ class DataClass with ChangeNotifier {
           }
         }
       }
-
-      // print('this is alert toggling ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,');
-      // alertMode = true;
       notifyListeners();
       print("1111111111111111111111111s end PatientSituationUpdated");
     });
 
-    // socketInstance.connection.on('SetPatientSituations', (patients) {
-    //   print("00000000000000000000000000 start SetPatientSituations");
-    //   print(patients.toString());
-    //   print("00000000000000000000000000 end SetPatientSituations");
-    // });
-
-    socketInstance.connection.on('UpdatePatientMonitoring', (patientsMonitor) {
-      print("///////////////////////// start UpdatePatientMonitoring");
-      print(patientsMonitor.toString());
-      print("///////////////////////// end UpdatePatientMonitoring");
+    socketInstance.connection.on('SetPatientSituations', (patientsSituation) {
+      print("00000000000000000000000000 start SetPatientSituations");
+      print(patientsSituation.toString());
+      notifyListeners();
+      print("00000000000000000000000000 end SetPatientSituations");
     });
+
+    // socketInstance.connection.on('UpdatePatientMonitoring', (patientsMonitor) {
+    //   print("///////////////////////// start UpdatePatientMonitoring");
+    //   print(patientsMonitor.toString());
+    //   print("///////////////////////// end UpdatePatientMonitoring");
+    // });
   }
 }

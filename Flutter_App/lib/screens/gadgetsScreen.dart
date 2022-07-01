@@ -43,6 +43,7 @@ class GadgetsScreen extends StatelessWidget {
 
       if (response.statusCode == 200) {
         result = jsonDecode(response.body);
+        print(result.toString());
         makeTableRows(result);
       } else {
         throw Exception('Failed to get gadgets list.');
