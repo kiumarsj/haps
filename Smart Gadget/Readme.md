@@ -11,5 +11,6 @@ So according to the said parameters to make the first example of this device and
 ![s0](https://user-images.githubusercontent.com/47954697/176932182-f602ffaf-1955-4945-98a9-fcd9419e9cbb.png)
 
 Final result:
+
 ![image](https://user-images.githubusercontent.com/47954697/176932443-07179a24-444e-4f4b-a6d7-8d3666cae871.png)
 
